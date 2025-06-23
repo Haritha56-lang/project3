@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML Project: Responsive + Quiz + API</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      color: #333;
+      padding: 30px 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    .section {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      margin: 30px auto;
+      max-width: 800px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #0072ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #005fd3;
+    }
+
+    #quiz-result, #joke {
+      margin-top: 20px;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .section {
+        padding: 15px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌐 Responsive Webpage with Quiz & API</h1>
+  </header>
+
+  <!-- Section 1: Responsive Design Info -->
+  <div class="section">
+    <h2>1️⃣ Responsive Design</h2>
+    <p>This webpage is responsive! Try resizing your browser window or open it on your phone or tablet. The layout and font sizes will adjust automatically using media queries.</p>
+  </div>
+
+  <!-- Section 2: Interactive Quiz -->
+  <div class="section">
+    <h2>2️⃣ Take a Quick Quiz</h2>
+
+    <div class="question">
+      <strong>1. What does CSS stand for?</strong><br>
+      <input type="radio" name="q1" value="a"> Cascading Style Sheets<br>
+      <input type="radio" name="q1" value="b"> Computer Styled Sections<br>
+    </div>
+
+    <div class="question">
+      <strong>2. Which tag is used to link JavaScript?</strong><br>
+      <input type="radio" name="q2" value="a"> &lt;style&gt;<br>
+      <input type="radio" name="q2" value="b"> &lt;script&gt;<br>
+    </div>
+
+    <button onclick="checkQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+
+  <!-- Section 3: API Joke Fetcher -->
+  <div class="section">
+    <h2>3️⃣ Need a Laugh? 😂</h2>
+    <p>Click the button to fetch a random joke from the internet!</p>
+    <button onclick="fetchJoke()">Get Joke</button>
+    <div id="joke">Your joke will appear here...</div>
+  </div>
+
+  <script>
+    // Quiz Logic
+    function checkQuiz() {
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      let score = 0;
+
+      if (q1 && q1.value === "a") score++;
+      if (q2 && q2.value === "b") score++;
+
+      document.getElementById("quiz-result").textContent = `✅ You scored ${score}/2`;
+    }
+
+    // Joke API
+    function fetchJoke() {
+      fetch('https://official-joke-api.appspot.com/jokes/random')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("joke").textContent = `${data.setup} — ${data.punchline}`;
+        })
+        .catch(() => {
+          document.getElementById("joke").textContent = "❌ Failed to fetch a joke.";
+        });
+    }
+  </script>
+
+</body>
+</html>
+
